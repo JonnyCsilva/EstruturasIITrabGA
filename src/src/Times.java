@@ -43,7 +43,7 @@ public enum Times
 
     int indice() { return indice; }
     
-	public static int BuscaChave(String nome)
+	public static int buscaChave(String nome)
 	{
 		for (Times time: Times.values()) {
             if (nome.equalsIgnoreCase(time.Nome)) return time.indice;
