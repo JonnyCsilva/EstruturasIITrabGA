@@ -105,10 +105,33 @@ public class Estatisticas {
 		ObjetoOrdenado[] minHeapDerrotas = heapDerrotas.getHeap();
 		AjusteClassificacaoDerrotas(minHeapDerrotas);
 		
-		InfoTime time = minHeapDerrotas[19].getTime();
-		String conteudoArquivo = time.getNome() +", "+ minHeapDerrotas[19].getPropriedadeOrdenada();
+		int indice = 19;
+		boolean fgValorDiferente = false;
+		String conteudoArquivo = "";
+		while(!fgValorDiferente){
+			InfoTime time = minHeapDerrotas[indice].getTime();
+			if(minHeapDerrotas[19].getPropriedadeOrdenada() == minHeapDerrotas[indice].getPropriedadeOrdenada())
+				conteudoArquivo += time.getNome() +", "+ (int)minHeapDerrotas[indice].getPropriedadeOrdenada() +"\n";
+			else
+				fgValorDiferente = true;
+			indice--;
+		}
+		
 		System.out.println(conteudoArquivo);
 		Arquivo.SalvarArquivo("less_defeats.txt", conteudoArquivo);
+	}
+	
+	public void exibeESalvaChutesGol(Hash tabelaTimes){
+		ObjetoOrdenado[] classificacao = ObtemClassificacaoChutesGol(tabelaTimes);
+		String conteudoArquivo = "";
+		
+		for(int i = 0; i < classificacao.length; i++) {
+			conteudoArquivo += i + 1 + ". " + classificacao[i].getTime().getNome() + ", "
+					+ String.format("%.5f", classificacao[i].getTime().getAproveitamentoChutes()) + " chutes a gol para cada gol. \n";
+		}
+		
+		System.out.println(conteudoArquivo);
+		Arquivo.SalvarArquivo("best_strikers.txt", conteudoArquivo);
 	}
 	
 	private String ObtemNomePadronizado(String nomeTime, boolean fgAdicionaEspacosInicio){
@@ -250,18 +273,20 @@ public class Estatisticas {
 			indice--;
 		}
 	}
-	
-	public ObjetoOrdenado[] classificacaoChutesGol(Hash hash) {
+		
+	private ObjetoOrdenado[] ObtemClassificacaoChutesGol(Hash hash) {
 		ObjetoOrdenado[] array = new ObjetoOrdenado[20];
 		Times[] times = Times.values();
+		
 		for(Times timeAtual : times){
 			InfoTime time = hash.busca(timeAtual.getNome());			
 			ObjetoOrdenado novo = new ObjetoOrdenado();
-			novo.setPropriedadeOrdenada((int)time.getAproveitamentoChutes());
+			novo.setPropriedadeOrdenada(time.getAproveitamentoChutes());
 			novo.setTime(time);
 			array[timeAtual.getIndice()] = novo;
 		}
-		HeapSort heapChutesGol = new HeapSort(new MinHeap());
+		
+		HeapSort heapChutesGol = new HeapSort(new MaxHeap());
 		heapChutesGol.HeapSortOrdenacao(array);
 		ObjetoOrdenado[] classificacao = heapChutesGol.getHeap();
 		return classificacao;
@@ -273,4 +298,46 @@ public class Estatisticas {
 					+ array[i].getTime().getAproveitamentoChutes() + " chutes a gol para cada gol.");
 		}
 	}
+
+    public void exibeSalvaTimeArtilheiro (Hash tabelaTimes)
+    {
+        ObjetoOrdenado[] listaTimesMarcadores = ObtemListaTimesMarcadores (tabelaTimes);
+        HeapSort hMarcador = new HeapSort(new MaxHeap());
+        hMarcador.HeapSortOrdenacao(listaTimesMarcadores);
+        ObjetoOrdenado[] marcadores = hMarcador.getHeap();
+
+        InfoTime time = marcadores[19].getTime();
+        String conteudoArquivo = time.getNome() +", " + 
+                                 (int)marcadores[19].getPropriedadeOrdenada();
+        System.out.println(conteudoArquivo);
+        Arquivo.SalvarArquivo("top_scorer.txt", conteudoArquivo);
+    }
+    private ObjetoOrdenado[] ObtemListaTimesMarcadores (Hash tabelaTimes)
+    {
+        ObjetoOrdenado[] lista = new ObjetoOrdenado [20];
+        Times[] timesLiga = Times.values ();
+        for (Times timeAtual : timesLiga)
+        {
+            InfoTime time = tabelaTimes.busca (timeAtual.getNome ());
+            ObjetoOrdenado novo = new ObjetoOrdenado ();
+            int gols = time.getTotalGolsMarcadosEmCasaFullTime () + 
+                       time.getTotalGolsMarcadosForaDeCasaFullTime ();
+            novo.setPropriedadeOrdenada (gols);
+            novo.setTime(time);
+            lista [timeAtual.getIndice ()] = novo;
+        }
+        return lista;
+    }
+
+    private void printMarcadores (ObjetoOrdenado[] om)
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            InfoTime t = om[i].getTime ();
+            System.out.println ("Time: " + t.getNome () +
+                                " Gols marcados: " + (t.getTotalGolsMarcadosForaDeCasaFullTime() + 
+                                                      t.getTotalGolsMarcadosEmCasaFullTime())
+                               );
+        }
+    }
 }
