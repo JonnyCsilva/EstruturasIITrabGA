@@ -274,7 +274,7 @@ public class Estatisticas {
 		}
 	}
 		
-	private ObjetoOrdenado[] ObtemClassificacaoChutesGol(Hash hash) {
+	public ObjetoOrdenado[] ObtemClassificacaoChutesGol(Hash hash) {
 		ObjetoOrdenado[] array = new ObjetoOrdenado[20];
 		Times[] times = Times.values();
 		

@@ -46,12 +46,7 @@ public class ClassificadorLiga {
 		
 		Estatisticas estatisticas = new Estatisticas();
 		
-<<<<<<< HEAD
-		System.out.println("Digite o que você deseja executar: \n 1- Pesquisar um time \n 2- Exibir classificação \n 3- Classificação chutes para gol \n 0- Sair");
-		System.out.println("Digite o que você deseja executar: \n 1- Pesquisar um time \n 2- Exibir e Salvar Classificação \n 3- Exibir e Salvar Time com menos derrotas  \n 0- Sair");
-=======
 		System.out.println("Digite o que você deseja executar: \n 1- Pesquisar um time \n 2- Exibir classificação \n 3- Exibir e Salvar Time com Mais Gols  \n 4- Exibir e Salvar Time com menos derrotas \n 5- Classificação chutes para gol  \n 0- Sair");
->>>>>>> refs/remotes/anfavretto/master
 		BufferedReader leitura = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			int valorSelecionado = Integer.parseInt(leitura.readLine());
@@ -73,16 +68,9 @@ public class ClassificadorLiga {
 					estatisticas.exibeESalvaClassificacaoFullTime(tabelaHash);
 					break;
 				case(3):
-<<<<<<< HEAD
-					estatisticas.printlnClassificacaoChutesGol(estatisticas.classificacaoChutesGol(tabelaHash));
-					break;
-				}
-				System.out.println("Digite o que você deseja executar: \n 1- Pesquisar um time \n 2- Exibir classificação \n 3- Classificação chutes para gol \n 0- Sair");
-=======
-          estatisticas.exibeSalvaTimeArtilheiro (tabelaHash);
+					estatisticas.printlnClassificacaoChutesGol(estatisticas.ObtemClassificacaoChutesGol(tabelaHash));
 					break;
 				case(4):
->>>>>>> refs/remotes/anfavretto/master
 					estatisticas.exibeESalvaMenorPerdedor(tabelaHash);
 					break;
 				case(5):
@@ -90,15 +78,9 @@ public class ClassificadorLiga {
 					break;
 				}
 				
-<<<<<<< HEAD
-				System.out.println("Digite o que você deseja executar: \n 1- Pesquisar um time \n 2- Exibir classificação \n 3- Exibir e Salvar Time com menos derrotas  \n 0- Sair");
-				valorSelecionado = Integer.parseInt(leitura.readLine());
-				
-=======
 				System.out.println("Digite o que você deseja executar: \n 1- Pesquisar um time \n 2- Exibir classificação \n 3- Exibir e Salvar Time com Mais Gols  \n 4- Exibir e Salvar Time com menos derrotas \n 5- Classificação chutes para gol  \n 0- Sair");
 				valorSelecionado = Integer.parseInt(leitura.readLine());
 			}
->>>>>>> refs/remotes/anfavretto/master
 		} catch (IOException e) {
 			System.out.println("Problema ao ler seleção "+ caminhoArquivo +". "+ e.getMessage());
 		}
